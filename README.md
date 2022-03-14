@@ -1,4 +1,4 @@
-#2022 NASA Minds Team Kepler
+# 2022 NASA Minds Team Kepler #
 
 Supervisor:  Professor: Dr. Eng: Mohamed El Hadedy 
 Student Members: Dhanush Karthikeyan, Antony C. Yung, Shadrach W. Viste, Ruben Torres Romero
