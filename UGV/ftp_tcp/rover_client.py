@@ -3,26 +3,23 @@
 import socket
 import time
 import ftplib
- 
-IP = '127.0.0.1' # change to other side's ip address
-TCP_PORT = 5005
-BUFFER_SIZE = 1024
-FILE_NAME = "test.json"
-FTP_SUBDIR = 'incoming'
 
-# assuming anonymous login with subdirectory FTP_SUBDIR under anonymous root
-ftp = ftplib.FTP(IP)
-ftp.login()
-ftp.cwd(FTP_SUBDIR)
-timestamped_filename = str(int(time.time()*1000)) + '_' + FILE_NAME
-file = open(FILE_NAME,'rb')
-ftp.storbinary('STOR ' + timestamped_filename, file)
-file.close()
-ftp.quit()
+def rovercomm_send(filename, ip = '127.0.0.1', ftp_user = 'rovercomm', ftp_pass = 'rovercomm', tcp_port = 5005, ftp_subdir = 'incoming'):
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((IP, TCP_PORT))
-s.send(timestamped_filename.encode())
-s.close()
+    ftp = ftplib.FTP(ip, ftp_user, ftp_pass)
+    ftp.cwd(ftp_subdir)
 
+    #timestamped_filename = str(int(time.time()*1000)) + '_' + FILE_NAME
+    
+    file = open(filename,'rb')
+    ftp.storbinary('STOR ' + filename, file)
+    file.close()
+    file = open(filename+'.sig','rb')
+    ftp.storbinary('STOR ' + filename+'.sig', file)
+    file.close()
+    ftp.quit()
 
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((ip, tcp_port))
+    s.send(filename.encode())
+    s.close()
