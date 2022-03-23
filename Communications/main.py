@@ -7,6 +7,9 @@
 '''
     - JSON with angle, distance
     - payload type
+
+type: directions, lidar
+payload: 130, 3 , 20, 1, 120, 0
 '''
 
 # run cisco code
@@ -38,5 +41,6 @@
         - communicate on that port
         - log commands not verified?
 '''
+
 
 
