@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.lines import Line2D
 
+# global variable for plot
+ax = None
+
 #------------------------------------------------
 listLabelPoints = []
 waypoints = []
@@ -161,24 +164,32 @@ def on_click(event):
             plt.draw()
 
 #================================================
-fig, ax = plt.subplots()
 
-ax.set_title("Waypoint Engine - Double Click to add", loc="center")
-ax.set_xlim(0, 400)
-ax.set_ylim(0, 300)
-ax.set_aspect('equal')
+def gui_driver():
+    global ax
+    fig, ax = plt.subplots()
 
-fig.canvas.mpl_connect('button_press_event', on_click)
-fig.canvas.mpl_connect('button_press_event', on_press)
-fig.canvas.mpl_connect('button_release_event', on_release)
-fig.canvas.mpl_connect('pick_event', on_pick)
-fig.canvas.mpl_connect('motion_notify_event', on_motion)
+    ax.set_title("Waypoint Engine - Double Click to add", loc="center")
+    ax.set_xlim(0, 400)
+    ax.set_ylim(0, 300)
+    ax.set_aspect('equal')
 
-plt.grid(True)
-plt.show()
+    fig.canvas.mpl_connect('button_press_event', on_click)
+    fig.canvas.mpl_connect('button_press_event', on_press)
+    fig.canvas.mpl_connect('button_release_event', on_release)
+    fig.canvas.mpl_connect('pick_event', on_pick)
+    fig.canvas.mpl_connect('motion_notify_event', on_motion)
 
-# extract waypoints here
-print('x-coordinates')
-print(list(line_object[0].get_xdata()))
-print('y-coordinates')
-print(list(line_object[0].get_ydata()))
+    plt.grid(True)
+    plt.show()
+
+    # extract waypoints here
+    # print('x-coordinates')
+    # print(list(line_object[0].get_xdata()))
+    # print('y-coordinates')
+    # print(list(line_object[0].get_ydata()))
+    return list(line_object[0].get_xdata()), list(line_object[0].get_ydata())
+
+'''x, y = gui_driver()
+print(x)
+print(y)'''

@@ -14,6 +14,7 @@ class UGV():
     def __init__(self, name):
         self.name = name
         self.connection = None
+        self.result = None
 
     def connect(self):
         if self.name == 'A':
@@ -31,10 +32,14 @@ class UGV():
             print('Please try again')
         finally:
             return 0
+    
+    def transfer(self, file, destination):
+        self.result = self.connection.put(file, remote = destination)
+        print("Uploaded {0.local} to {0.remote}".format(self.result))
+        return self.result
 
-X = UGV('A')
+'''X = UGV('A')
 X.connect()
 X.run('cd /home/pi/Documents/NASA_Minds')
-X.run('ofreovre')
-X.run('ls')
+X.run('ls')'''
 

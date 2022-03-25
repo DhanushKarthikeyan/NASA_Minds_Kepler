@@ -1,0 +1,15 @@
+
+
+fab makePL [name]
+
+fab sendPL [name] A
+
+# check if client exists
+fab send client.py A
+
+
+# COMBINE Sign and transfer
+# sign [name]
+
+# ftp file
+fab ftp A [name]

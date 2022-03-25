@@ -3,6 +3,7 @@
 import socket
 import time
 import ftplib
+import sys
 
 def rovercomm_send(filename, ip = '127.0.0.1', ftp_user = 'rovercomm', ftp_pass = 'rovercomm', tcp_port = 5005, ftp_subdir = 'incoming'):
 
@@ -23,3 +24,6 @@ def rovercomm_send(filename, ip = '127.0.0.1', ftp_user = 'rovercomm', ftp_pass 
     s.connect((ip, tcp_port))
     s.send(filename.encode())
     s.close()
+
+filename = sys.argv[1]
+rovercomm_send(filename)

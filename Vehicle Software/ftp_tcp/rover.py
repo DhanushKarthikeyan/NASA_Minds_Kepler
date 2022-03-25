@@ -26,6 +26,10 @@ if __name__ == '__main__':
                 try:
                     with open(FTP_INCOMING_DIR+data,'r') as file:
                         print(file.read())
+                        # driver
+                        # verify file
+                        # parse through json
+                            # mecanum
                 except OSError as e:
                     print(str(e))
                 print(f"closing connection")
