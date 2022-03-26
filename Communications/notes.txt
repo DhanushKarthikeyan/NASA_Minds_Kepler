@@ -8,8 +8,12 @@ fab sendPL [name] A
 fab send client.py A
 
 
-# COMBINE Sign and transfer
+# COMBINE Sign
 # sign [name]
 
 # ftp file
 fab ftp A [name]
+
+// HERE
+fab makePL triangle
+fab sendPL triangle A

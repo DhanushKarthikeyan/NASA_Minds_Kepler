@@ -18,9 +18,9 @@ class UGV():
 
     def connect(self):
         if self.name == 'A':
-            self.connection = fabric.Connection("192.168.1.132", port=22, user="pi", connect_kwargs={'password': 'raspberry'})
+            self.connection = fabric.Connection("192.168.0.106", port=22, user="pi", connect_kwargs={'password': 'raspberry'})
         elif self.name == 'B':
-            self.connection = fabric.Connection("192.168.1.132", port=22, user="pi", connect_kwargs={'password': 'raspberry'})
+            self.connection = fabric.Connection("192.168.0.102", port=22, user="pi", connect_kwargs={'password': 'raspberry'})
         else:
             print('Name not recognized! ')
         return self.connection

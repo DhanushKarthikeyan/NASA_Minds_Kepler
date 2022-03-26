@@ -31,18 +31,17 @@ def sendPL(ctx, file, ugv): # transmit payload
     X = connect(ugv)
     if 'json' not in file:
         file = file + '.json'
-    X.transfer(file, '/home/pi/Documents/NASA_Minds') #change directory here
+    X.transfer(file, '/home/pi') #change directory here
 
 @task
 def send(ctx, file, ugv): # send any file
     X = connect(ugv)
-    X.transfer(file, '/home/pi/Documents/NASA_Minds') #change directory here
+    X.transfer(file, '/home/pi') #change directory here
 
 @task
 def check(ctx, ugv): # check directory at UGV
     X = connect(ugv)
-    if ugv == 'A':
-        X.run('cd /home/pi/Documents/NASA_Minds && ls')
+    X.run('cd /home/pi && ls')
 
 '''@task
 def sendif(ctx, file, ugv):
@@ -55,14 +54,25 @@ def sendif(ctx, file, ugv):
         #X.transfer(file, '/home/pi/Documents/NASA_Minds')'''
 
 @task
-def sign(ctx):
-    # include cisco code here
-    pass
+def sign(ctx, ugv, filename):
+    X = connect(ugv)
+    if 'json' not in filename:
+        file = filename+'.json'
+    print(f'signing {file}')
+
+    X.run(f'cd /home/pi && lms sign rover1 {file}')
+    print(f'\n\n{file} signed!\n') 
+
+@task
+def verify(ctx, ugv, filename):
+    X = connect(ugv)
+    file = filename+'.json'
+    X.run(f'cd /home/pi && lms verify rover1 {file}') 
 
 @task
 def ftp(ctx, ugv, filename):
     X = connect(ugv)
-    X.run(f'cd /home/pi/Documents/NASA_Minds && python3 root_client.py {filename}')
+    X.run(f'cd /home/pi && python3 root_client.py {filename}')
 
 @task
 def get(ctx):

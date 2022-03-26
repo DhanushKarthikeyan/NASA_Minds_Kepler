@@ -18,8 +18,8 @@
 #define enable4Pin 12
 
 // Replace with your network credentials
-const char* ssid     = "";
-const char* password = "";
+const char* ssid     = "TP-Link_474F";
+const char* password = "52969416";
 
 // Set web server port number to 80
 WiFiServer server(80);
@@ -37,7 +37,7 @@ int dutyCycle2 = 0;
 int dutyCycle3 = 0;
 int dutyCycle4 = 0;
 
-int max_thr = 230; 
+int max_thr = 220; 
 int min_thr = 160;
 
 // Variable to store the HTTP request
@@ -62,6 +62,7 @@ void right();
 void off();
 void mecanum(int angle);
 void steady_increase(long d1, long d2, int duration);
+void drift(long d1, long d2, int duration);
 
 void setup() {
   Serial.begin(115200);
@@ -94,12 +95,14 @@ void setup() {
   // init pwm channels
   ledcSetup(pwmChannel1, freq, resolution);
   ledcSetup(pwmChannel2, freq, resolution);
+  ledcSetup(pwmChannel3, freq, resolution);
+  ledcSetup(pwmChannel4, freq, resolution);
   
   // attach the channel to the GPIO to be controlled
   ledcAttachPin(enable1Pin, pwmChannel1);
   ledcAttachPin(enable2Pin, pwmChannel2);
-  ledcAttachPin(enable3Pin, pwmChannel1);
-  ledcAttachPin(enable4Pin, pwmChannel2);
+  ledcAttachPin(enable3Pin, pwmChannel3);
+  ledcAttachPin(enable4Pin, pwmChannel4);
 
   // Connect to Wi-Fi network with SSID and password
   Serial.print("Connecting to ");
@@ -267,11 +270,32 @@ void steady_increase(long d1, long d2, int duration){
   for(int i = 4; i>=0; i--){
     ledcWrite(pwmChannel1, d1/i);
     ledcWrite(pwmChannel2, d2/i);
+    ledcWrite(pwmChannel3, d1/i);
+    ledcWrite(pwmChannel4, d2/i);
     delay(duration/8);
   }
   delay(duration);
-  
 }
+
+void drift(long d1, long d2, int duration){
+  /*for(int i = 4; i>=0; i--){
+    ledcWrite(pwmChannel1, d1/i);
+    ledcWrite(pwmChannel2, d2/i);
+    ledcWrite(pwmChannel3, d3/i);
+    ledcWrite(pwmChannel4, d4/i);
+    delay(duration/8);
+    }
+    */
+    int i = 1;
+    ledcWrite(pwmChannel1, d1/i);
+    ledcWrite(pwmChannel2, d2/i);
+    ledcWrite(pwmChannel3, d1*1.14/i);
+    ledcWrite(pwmChannel4, d2*1.14/i);
+    delay(duration/8);
+
+  delay(duration);
+}
+
 void mecanum(int angle){
   // calculate duty cycles using custom algorithm
   long duty_cycle1= abs((max_thr - min_thr)*cos(radians(angle) - 0.79)) + min_thr;
@@ -293,6 +317,7 @@ void mecanum(int angle){
             default: off();
               break;
               }
-   steady_increase(duty_cycle1, duty_cycle2, 5000);
+   drift(duty_cycle1, duty_cycle2, 10000);
+   //steady_increase(duty_cycle1, duty_cycle2, 5000);
    off();
 }
