@@ -4,8 +4,11 @@ import RPi.GPIO as gpio
 from time import sleep
 from math import pi, cos, sin
 
-MAX_THR = 240
-MIN_THR = 165
+#MAX_THR = 240
+#MIN_THR = 165
+
+MAX_THR = 100
+MIN_THR = 0
 
 # https://www.electronicwings.com/raspberry-pi/raspberry-pi-pwm-generation-using-python-and-c
 PWM_FREQ = 3000
@@ -16,16 +19,16 @@ NEED TO CHANGE THE PIN NUMBER!!!
 '''
 
 # PWM gpio pin number
-PWM0PIN = 12
-PWM1PIN = 13
+PWM0PIN = 12    # FRBL?
+PWM1PIN = 13    # FLBR?
 
 # front left wheel and back right wheel gpio pin number
-FLBR_FWD_PIN = 0 # forward
-FLBR_BWD_PIN = 0 # backward
+FLBR_FWD_PIN = 16 # forward
+FLBR_BWD_PIN = 20 # backward
 
 # front right wheel and back left wheel gpio pin number
-FRBL_FWD_PIN = 0
-FRBL_BWD_PIN = 0
+FRBL_FWD_PIN = 21
+FRBL_BWD_PIN = 26
 
 '''
 NEED TO CHANGE THE PIN NUMBER!!!
@@ -55,6 +58,8 @@ def gpio_init():
     gpio.setmode(GPIO_MODE)
     for e in ALL_PINS:
         gpio.setup(e, gpio.OUT)
+    gpio.setup(PWM0PIN, gpio.OUT)
+    gpio.setup(PWM1PIN, gpio.OUT)
     pwm0 = gpio.PWM(PWM0PIN, PWM_FREQ)
     pwm0.start(0)
     pwm1 = gpio.PWM(PWM1PIN, PWM_FREQ)
@@ -93,6 +98,7 @@ def right():
     on(RIGHT_PINS)
 
 def mecanum(angle, duration):
+    print(f'angle:{angle}, duration:{duration}')
     init_check()
     duty_cycle0 = abs((MAX_THR - MIN_THR)*cos(radians(angle) - 0.79)) + MIN_THR
     duty_cycle1 = abs((MAX_THR - MIN_THR)*sin(radians(angle) - 0.79)) + MIN_THR
@@ -114,3 +120,4 @@ def mecanum(angle, duration):
         off()
     sleep(duration/1000)
     off()
+    return (duty_cycle0, duty_cycle1)

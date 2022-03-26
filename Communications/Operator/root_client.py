@@ -31,4 +31,4 @@ def rovercomm_send(filename, destination_name, ftp_user = 'rovercomm', ftp_pass 
     s.close()
 
 filename = sys.argv[1]
-rovercomm_send(filename)
+rovercomm_send(filename, 'B')

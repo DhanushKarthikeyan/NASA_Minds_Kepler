@@ -6,10 +6,10 @@ from ftplib import FTP
 import socket
 from driver import driver
 
-TCP_IP = '127.0.0.1'
+TCP_IP = ''
 TCP_PORT = 5005
 BUFFER_SIZE = 1024
-FTP_INCOMING_DIR = '/srv/ftp/incoming/'
+FTP_INCOMING_DIR = '/srv/rovercomm/incoming/'
 
 if __name__ == '__main__':
     try:
@@ -26,13 +26,11 @@ if __name__ == '__main__':
             if data:
                 print(f"received file name: {data}")
                 try:
-                    with open(FTP_INCOMING_DIR+data,'r') as file:
-                        #print(file.read())
-                        driver(file)
-
-                        
+                    open(FTP_INCOMING_DIR+data,'r')  
                 except OSError as e:
                     print(str(e))
+                else:
+                    driver(data)
                 print(f"closing connection")
                 conn.close()
                 conn, addr = s.accept()
