@@ -34,6 +34,6 @@ def convert_mecanum_polar(x_val, y_val):
                 a = 180 - degrees(acos(abs(x - x_2)/r))
             else:
                 a = 270 - degrees(acos(abs(x - x_2)/r))
-        RAoutput.append((round(r, 2), round(a)))
+        RAoutput.append([round(r, 2), round(a)])
     return RAoutput
 
