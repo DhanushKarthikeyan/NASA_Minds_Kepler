@@ -44,9 +44,9 @@ def rovercomm_send(filename, destination_name, ftp_user = 'rovercomm', ftp_pass 
     s.close()
 
 def logtime(filename):
-    with open('end_time.csv', 'a+') as timelog:
+    with open('timelog.csv', 'a+') as timelog:
         timelog.write(f'{os.path.getsize(f"{os.getcwd()}/{filename}")}, ')
-        timelog.write(f'{int(time()*1000)}\n')
+        timelog.write(f'{int(time()*1000)}, ')
 
 def gentestfile():
     filename = f'benchmark_test_{int(time()*1000)}'
@@ -66,6 +66,6 @@ if __name__ ==  "__main__":
     p.start()
     for i in range(100):
         runtest()
-        sleep(5)
+        sleep(1)
     p.terminate()
-    p.close()        
+    p.close()
