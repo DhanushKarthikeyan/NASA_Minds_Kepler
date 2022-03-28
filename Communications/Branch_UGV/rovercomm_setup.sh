@@ -34,5 +34,5 @@ git clone https://github.com/DhanushKarthikeyan/NASA_Minds_Kepler
 ln -s $(pwd)/NASA_Minds_Kepler/Communications/Branch_UGV branch
 
 # change owner and perm
-chown --recursive pi *
+chown --recursive pi:pi *
 chmod --recursive u+x *
