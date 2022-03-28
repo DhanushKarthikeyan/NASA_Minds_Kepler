@@ -31,4 +31,8 @@ rm -rf hash-sigs
 
 # pull rover code
 git clone https://github.com/DhanushKarthikeyan/NASA_Minds_Kepler
-ln -s ./Communications/Branch_UGV branch
+ln -s $(pwd)/Communications/Branch_UGV branch
+
+# change owner and perm
+chown --recursive pi *
+chmod --recursive u+x *
