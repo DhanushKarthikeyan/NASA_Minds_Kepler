@@ -4,14 +4,14 @@
 
 from ftplib import FTP
 import socket
-from driver import driver
+from .driver import driver
 
 TCP_IP = ''
 TCP_PORT = 5005
 BUFFER_SIZE = 1024
 FTP_INCOMING_DIR = '/srv/rovercomm/incoming/'
 
-if __name__ == '__main__':
+def rover_main():
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -39,3 +39,7 @@ if __name__ == '__main__':
         print("Keyboard interrupt, exiting") 
     finally:
         conn.close()
+
+
+if __name__ == '__main__':
+    rover_main()
