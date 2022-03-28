@@ -20,7 +20,7 @@ def driver(filename):
         print('verified')
         with open('end_time.csv', 'a+') as timelog:
             timelog.write(f'{os.path.getsize(FTP_INCM_PATH+filename)}, ')
-            timelog.write(f'{int(time()*10000000)}\n')
+            timelog.write(f'{int(time()*1000)}\n')
         #with open(FTP_INCM_PATH+filename) as json_file:
         #    data = json.load(json_file)
         #    mecanum_handler(data)

@@ -46,10 +46,10 @@ def rovercomm_send(filename, destination_name, ftp_user = 'rovercomm', ftp_pass 
 def logtime(filename):
     with open('end_time.csv', 'a+') as timelog:
         timelog.write(f'{os.path.getsize(f"{os.getcwd()}/{filename}")}, ')
-        timelog.write(f'{int(time()*10000000)}\n')
+        timelog.write(f'{int(time()*1000)}\n')
 
 def gentestfile():
-    filename = f'benchmark_test_{time()*10000000}'
+    filename = f'benchmark_test_{int(time()*1000)}'
     with open(filename, 'wb+') as file:
         file.write(os.urandom(randint(0,10000000)))
     return filename
