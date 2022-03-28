@@ -26,6 +26,7 @@ cd hash-sigs
 make demo
 mv demo /usr/bin/lms
 chmod +x /usr/bin/lms
+cd ..
 rm -rf hash-sigs
 
 # pull rover code
